@@ -4,6 +4,7 @@ import pprint
 import json
 import yaml
 import re
+import os
 
 from monitor_manager import Monitor
 
@@ -87,8 +88,6 @@ class Screens():
 
         return monitors
 
-    
-
     def store_specs():
         specs = Screens.get_specs()
         stored_monitors = []
@@ -105,7 +104,7 @@ class Screens():
 
         # Load existing or stage for new
         try:
-            with open('presets.yaml', 'r') as file:
+            with open('data/presets.yaml', 'r') as file:
                 data = yaml.load(file, Loader=yaml.Loader) or {}
         except FileNotFoundError:
             data = {}
@@ -119,15 +118,55 @@ class Screens():
         data[preset_name].extend([monitor.to_dict() for monitor in stored_monitors])
 
         # Save updated presets back to YAML file
-        with open('presets.yaml', 'w') as file:
+        with open('data/presets.yaml', 'w') as file:
             yaml.dump(data, file, sort_keys=True)
 
         return stored_monitors
-    
-    def apply_specs(stored_monitor):
-        persistant_id = stored_monitor.persistant_id
-        origin = stored_monitor.origin
-        # Where is orientation?
-        orientation = 'stored_monitor.orient'
-        query = subprocess.run(['displayplacer', 'REPLACE_ME-with_Vars'])
 
+    def load_presets(file_path='data/presets.yaml'):
+        with open(file_path, 'r') as file:
+            return yaml.safe_load(file)
+
+    def generate_displayplacer_command(monitor):
+        # Extract fields from monitors dictionary
+        persistent_screen_id = monitor['persistent_screen_id']  # Use serial_screen_id instead of persistent_screen_id
+        serial_id = monitor['serial_screen_id']
+        hertz = monitor['hertz']
+        scaling = monitor['scaling']
+        color_depth = monitor['color_depth']
+        resolution = monitor['resolution']
+
+        origin_str = monitor['origin']
+        origin_coords = origin_str.split(' ')[0].strip('()').split(',')
+        origin_x = origin_coords[0]
+        origin_y = origin_coords[1]
+
+        command = f'id:{persistent_screen_id} res:{resolution} hz:{hertz} color_depth:{color_depth} enabled:true scaling:{scaling} origin:{origin_x},{origin_y} degree:0'
+        alt_command = f'serial_id:{serial_id} res:{resolution} hz:{hertz} color_depth:{color_depth} enabled:true scaling:{scaling} origin:{origin_x},{origin_y} degree:0'
+
+        return command, alt_command
+
+    def apply_display_settings(preset_name='default', file_path='data/presets.yaml'):
+        
+        commands = []
+        presets = Screens.load_presets(file_path)
+
+        if preset_name not in presets:
+            print(f"Preset '{preset_name}' not found.")
+            return
+
+        for monitor in presets[preset_name]:
+            # Verify if persistant id will work? if not use serial id
+            command = Screens.generate_displayplacer_command(monitor)
+            commands.append(command)
+
+        quoted_commands = [f'"{command}"' for command in commands]
+        full_command = ' '.join(quoted_commands)
+        full_command = f'displayplacer {full_command}'
+        print(f"Executing:\n{full_command}")
+
+        try:
+            result = subprocess.run(full_command, shell=True, check=True, capture_output=True, text=True)
+            print(f'Command executed successfully:\n{result.stdout}')
+        except subprocess.CalledProcessError as e:
+            print(f'Error occured cwhile executing command:\n{e.stderr}')        
