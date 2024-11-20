@@ -55,7 +55,7 @@ class Monitor():
     @staticmethod
     def load_monitor():
         try:
-            with open('presets.yaml', 'r') as file:
+            with open('data/presets.yaml', 'r') as file:
                 monitors = yaml.load(file, Loader=yaml.Loader)
                 if not isinstance(monitors, dict):
                     monitors = {}
@@ -76,5 +76,5 @@ class Monitor():
         # Add or update preset with new Monitor details
         data[preset_name] = [monitor.to_dict() for monitor in monitors]
         
-        with open('presets.yaml', 'w') as file:
+        with open('data/presets.yaml', 'w') as file:
             yaml.dump(data, file)

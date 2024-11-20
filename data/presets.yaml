@@ -12,7 +12,7 @@ default:
   contextual_screen_id: '2'
   display: 27 inch external screen
   hertz: '75'
-  origin: (1440,-281)
+  origin: (1440,0)
   persistent_screen_id: D914D099-7E53-0C05-0857-D6964E3302DB
   resolution: 2560x1440
   scaling: 'off'
@@ -31,26 +31,7 @@ home:
   contextual_screen_id: '2'
   display: 27 inch external screen
   hertz: '75'
-  origin: (1440,-281)
-  persistent_screen_id: D914D099-7E53-0C05-0857-D6964E3302DB
-  resolution: 2560x1440
-  scaling: 'off'
-  serial_screen_id: s809646406
-work:
-- color_depth: '8'
-  contextual_screen_id: '1'
-  display: MacBook built in screen
-  hertz: '60'
-  origin: (0,0) - main display
-  persistent_screen_id: 37D8832A-2D66-02CA-B9F7-8F30A301B230
-  resolution: 1440x900
-  scaling: 'on'
-  serial_screen_id: s4251086178
-- color_depth: '8'
-  contextual_screen_id: '2'
-  display: 27 inch external screen
-  hertz: '75'
-  origin: (1440,-281)
+  origin: (1440,0)
   persistent_screen_id: D914D099-7E53-0C05-0857-D6964E3302DB
   resolution: 2560x1440
   scaling: 'off'

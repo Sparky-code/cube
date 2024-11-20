@@ -10,6 +10,12 @@ https://github.com/OJFord/loginitems
 DisplayPlacer Repo
 https://github.com/jakehilborn/displayplacer
 
+Usage:
+python3 main.py save | apply | display 
+save --preset 'preset_name'
+apply --key 'saved_preset'
+display --details
+
 
 TO DO
 
