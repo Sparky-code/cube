@@ -1,7 +1,7 @@
 # import applescript
 import subprocess
 
-def run_applescript():
+def open_applications():
     # import list of apps from presets, (can bulk tell to open?)
     apps = "Chrome", "VSCodium", "iTerm"
     for app in apps:
@@ -11,6 +11,3 @@ def run_applescript():
             f'tell application {app} to activate'
             ]
         )
-
-if __name__ == "__main__":
-    run_applescript()
