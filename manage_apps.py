@@ -52,4 +52,4 @@ class Applications():
 # # Example usage
 # open_application("Google Chrome")
 # move_window("Google Chrome", 100, 100, 800, 600)
-Applications.get_applications()
+# Applications.get_applications()

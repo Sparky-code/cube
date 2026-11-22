@@ -4,6 +4,8 @@
 # Security
 
 
-# LocalOnly__pycache__/
+# LocalOnly
+
+__pycache__/
 venv/
 *.pyc
