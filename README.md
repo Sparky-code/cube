@@ -1,47 +1,54 @@
-Bash Man Pages
-> Man bash
-
-Applescript Man Pages
-> man osascript
-
-LoginItems Repo
-https://github.com/OJFord/loginitems
-
-DisplayPlacer Repo
-https://github.com/jakehilborn/displayplacer
-
-Usage:
-python3 main.py save | apply | display 
-save --preset 'preset_name'
-apply --key 'saved_preset'
-display --details
+# Usage
 
 
-TO DO
 
-# Does applescripts support MD?
+## Tasks
 
-# on startup run:
+### Applications
 
-# applescripts to open list of applications - Does this make more sense to use login items + bash to download / ascribe default apps to open on start up?
+#### open_application
+#### move_window
 
-# Refresh to close all and reopen default setup?
+### Screen Control
 
-# "Browser (DEFAULT)", "Slack / Teams", VSCode / IntelliJ, Beekeeper Studios, iTerm2
+#### get_screen_layout
+#### apply_preset
 
-# bash script to organize windows across available screens - prompt expected config, confirm
-# bash script to open list of webpages in Browser based on input var (daily, oncall, research, etc)
+### App Control
 
-Process:
+#### open_tabs
 
-Data representing each screen is ingested as a Screen. These screens are parsed and stripped into Monitors.
-Each Monitor contains key data about each screen which is then saved into a presets YAML file.
+Dependencies
 
-From here each Monitor can be loaded to print its specs (curious what your screen layout looks like technically?).
-Each Monitor can be added to a composition (presets for your Home or Office workstation!).
-Each Monitor can then be populated with application Windows. These can follow List and Pattern workflows (Choose your apps, choose your pattern) or can be 'handdrawn' with your mouse and then captures with a command.
+## [Typer](https://github.com/fastapi/typer/blob/master/README.md)
 
-Workflow
+## [PyObjC](https://pyobjc.readthedocs.io/en/latest/core/intro.html#an-introduction-to-pyobjc) > AppKit
 
-Its more efficient to build screen compositions using your System Settings but [PENDING] you can also define compositions from the command line.
+## [Subprocess](https://docs.python.org/3/library/subprocess.html)
 
+## [Webbrowser](https://docs.python.org/3/library/webbrowser.html)
+
+# Dev
+
+ - Get Open Apps || Create list of wanted apps (validate against available apps) 
+ >> DONE - TO Do: reformat these into clearer classes under manage_apps
+
+ - Get existing screens
+ - Prompt organization of existing apps on existing screens (is this laid out how you want it?)
+ - Get organization of apps on screens (coordinates in relationship)
+ - Attach coordinates to list of apps
+ - (Optional) - Offer Presets based on number of apps chosen and available screens
+
+ - Prompt name of layout
+ - Prompt any tags
+ - (Prompt Author?)
+ - Create Layout - save as JSON
+ -- Create JSON template
+ - Apply Template from JSON
+ - Allow trigger on start-up
+ - Allow trigger from slack-bot (Eg. OnCall!)
+
+# Testing
+ - One Screen, Two apps / split screen
+ - One screen, Three apps / split and quartered
+ - Two screens, Three apps / full and split (One portait one landscape)
